@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "./Logo";
 import { ModeToggle } from "./theme/ModeToggle";
+import LoginForm from "../authComponents/LoginForm";
 
 function Navbar() {
   return (
@@ -10,6 +11,7 @@ function Navbar() {
           <Logo />
         </div>
         <div className="w-1/2 h-full flex justify-end items-center">
+          <LoginForm />
           <ModeToggle />
         </div>
       </div>
