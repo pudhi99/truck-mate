@@ -2,8 +2,12 @@ import React from "react";
 import Logo from "./Logo";
 import { ModeToggle } from "./theme/ModeToggle";
 import LoginForm from "../authComponents/LoginForm";
+import LoginDialog from "./LoginDialog";
+import { auth } from "@/auth";
+import Logout from "../authComponents/Logout";
 
-function Navbar() {
+async function Navbar() {
+  const session = await auth();
   return (
     <div className="bg-navbar">
       <div className="container h-16 sticky top-0 w-full flex">
@@ -11,7 +15,7 @@ function Navbar() {
           <Logo />
         </div>
         <div className="w-1/2 h-full flex justify-end items-center">
-          <LoginForm />
+          {!!session?.user === true ? <Logout /> : <LoginDialog />}
           <ModeToggle />
         </div>
       </div>

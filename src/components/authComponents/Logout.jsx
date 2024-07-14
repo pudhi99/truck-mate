@@ -1,13 +1,14 @@
 import { logout } from "@/app/actions";
 import React from "react";
+import { Button } from "../ui/button";
 
 function Logout() {
   return (
     <div>
       <form action={logout}>
-        <button className="bg-slate-500 rounded-md p-3" type="submit">
+        <Button className="mx-2" type="submit">
           Logout
-        </button>
+        </Button>
       </form>
     </div>
   );

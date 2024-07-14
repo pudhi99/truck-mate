@@ -1,20 +1,76 @@
-import { doSocialLogin } from "@/app/actions";
-import React from "react";
+"use client";
+import { doCredentialLogin, doSocialLogin } from "@/app/actions";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { EnvelopeOpenIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 function LoginForm() {
+  const router = useRouter();
+  const [error, setError] = useState("");
+
+  async function onSubmit(event) {
+    event.preventDefault();
+    try {
+      const formData = new FormData(event.currentTarget);
+
+      const response = await doCredentialLogin(formData);
+
+      if (!!response.error) {
+        console.error(response.error);
+        setError(response.error.message);
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (e) {
+      console.error(e);
+      setError("Check your Credentials");
+    }
+  }
+
   return (
-    <div>
-      <form action={doSocialLogin}>
-        <Button type="submit" name="action" value="google" className="mx-2">
-          <EnvelopeOpenIcon className="mr-2 h-4 w-4" /> Sign in with Google
-        </Button>
-        <Button type="submit" name="action" value="github" className="mx-2">
-          <GitHubLogoIcon className="mr-2 h-4 w-4" /> Sign in with GitHub
-        </Button>
-      </form>
-    </div>
+    <>
+      <Card>
+        <form className="" onSubmit={onSubmit}>
+          <CardHeader>
+            <CardTitle>Login</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <div className="space-y-1">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                type="email"
+                name="email"
+                id="email"
+                defaultValue="admin@gmail.com"
+              />
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                defaultValue="12345"
+              />
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button type="submit">Submit</Button>
+          </CardFooter>
+        </form>
+      </Card>
+      {/* <div className="text-xl text-red-500">{error}</div> */}
+      {/* <SocialLogin /> */}
+    </>
   );
 }
 
