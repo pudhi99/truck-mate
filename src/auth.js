@@ -30,7 +30,7 @@ export const {
           const user = await usersCollection.findOne({
             email: credentials?.email,
           });
-          console.log(user);
+          console.log(user, "checking user");
           if (user) {
             const isMatch = await bcrypt.compare(
               credentials.password,

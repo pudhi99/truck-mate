@@ -1,11 +1,24 @@
+"use client";
 import { logout } from "@/app/actions";
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "../ui/button";
+import { UserContext } from "@/app/user-context";
+import { useRouter } from "next/navigation";
 
 function Logout() {
+  const router = useRouter;
+  const { setUser } = useContext(UserContext);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    try {
+      const response = logout();
+      setUser(false);
+      router.push("/");
+    } catch (error) {}
+  };
   return (
     <div>
-      <form action={logout}>
+      <form onSubmit={onSubmit}>
         <Button className="mx-2" type="submit">
           Logout
         </Button>

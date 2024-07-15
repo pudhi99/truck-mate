@@ -15,7 +15,8 @@ async function Navbar() {
           <Logo />
         </div>
         <div className="w-1/2 h-full flex justify-end items-center">
-          {!!session?.user === true ? <Logout /> : <LoginDialog />}
+          {/* {!!session?.user === true ? <Logout /> : <LoginDialog />} */}
+          <LoginDialog />
           <ModeToggle />
         </div>
       </div>

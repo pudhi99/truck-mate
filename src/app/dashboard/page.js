@@ -10,13 +10,15 @@ const Dashboard = async () => {
     <div className="flex flex-col items-center w-full">
       <h1>Welcome to Dashboard</h1>
       <h1>{session?.user?.name}</h1>
-      <Image
-        src={session?.user?.image}
-        alt="user logo"
-        height={70}
-        width={70}
-        className="rounded-full"
-      />
+      {session?.user?.image ? (
+        <Image
+          src={session?.user?.image}
+          alt="user logo"
+          height={70}
+          width={70}
+          className="rounded-full"
+        />
+      ) : null}
       <Logout />
     </div>
   );

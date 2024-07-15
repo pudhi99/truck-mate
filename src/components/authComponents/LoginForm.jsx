@@ -1,6 +1,6 @@
 "use client";
 import { doCredentialLogin, doSocialLogin } from "@/app/actions";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import {
@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { UserContext } from "@/app/user-context";
 
 function LoginForm() {
+  const { setUser } = useContext(UserContext);
   const router = useRouter();
   const [error, setError] = useState("");
 
@@ -28,6 +30,7 @@ function LoginForm() {
         console.error(response.error);
         setError(response.error.message);
       } else {
+        setUser(true);
         router.push("/dashboard");
       }
     } catch (e) {
@@ -68,7 +71,7 @@ function LoginForm() {
           </CardFooter>
         </form>
       </Card>
-      {/* <div className="text-xl text-red-500">{error}</div> */}
+      <div className="text-xl text-red-500">{error}</div>
       {/* <SocialLogin /> */}
     </>
   );

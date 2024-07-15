@@ -8,11 +8,18 @@ export async function doSocialLogin(formData) {
 }
 
 export async function logout() {
-  await signOut({ redirectTo: "/" });
+  try {
+    const response = await signOut();
+    console.log(response, "logout");
+
+    return response;
+  } catch (err) {
+    throw err;
+  }
 }
 
 export async function doCredentialLogin(formData) {
-  console.log("formData", formData);
+  // console.log("formData", formData);
 
   try {
     const response = await signIn("credentials", {
@@ -20,6 +27,7 @@ export async function doCredentialLogin(formData) {
       password: formData.get("password"),
       redirect: false,
     });
+
     return response;
   } catch (err) {
     throw err;
