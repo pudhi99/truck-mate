@@ -13,6 +13,9 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    allowMiddlewareResponseBody: true,
+  },
 };
 
 export default nextConfig;

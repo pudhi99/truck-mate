@@ -17,6 +17,14 @@ import LoginForm from "../authComponents/LoginForm";
 import RegistrationForm from "../authComponents/RegistrationForm";
 import { UserContext } from "@/app/user-context";
 import Logout from "../authComponents/Logout";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 const LoginDialog = () => {
   const { user } = useContext(UserContext);
@@ -27,6 +35,20 @@ const LoginDialog = () => {
   console.log(user, "checking user context");
   return (
     <>
+      <div className="md:hidden">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              <HamburgerMenuIcon />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <Link href={"/market/hyderabad"}>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+            </Link>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       {isLoggedIn ? (
         <Logout />
       ) : (
@@ -34,7 +56,7 @@ const LoginDialog = () => {
           <Dialog>
             <DialogTrigger asChild>
               <Button className="mx-2" variant="outline">
-                Login / SignUp
+                SignIn
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:w-fit">
