@@ -21,6 +21,7 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 import { z } from "zod";
 import InputLoadForm from "./InputLoadForm";
+import { useState } from "react";
 
 const formSchema = z.object({
   origin: z.string().min(2, {
@@ -55,6 +56,9 @@ const formSchema = z.object({
   price: z.number().positive().gte(1, {
     message: "price should be grater than 0",
   }),
+  distance: z.number().positive().gte(1, {
+    message: "distance should be grater than 0",
+  }),
   LUcharges: z.number().positive().gte(0, {
     LUcharges: "Loading and Unloading charges should be grater than 0",
   }),
@@ -65,6 +69,12 @@ const formSchema = z.object({
 
 export default function LoadForm() {
   // 1. Define your form.
+  const [statusBar, setStatusBar] = useState([
+    { label: "Location Details", completed: false },
+    { label: "Material Details", completed: false },
+    { label: "Truck Details", completed: false },
+    { label: "Amount and date", completed: false },
+  ]);
   const form = useForm({
     resolver: zodResolver(formSchema), // Use Zod for validation
     defaultValues: {
@@ -81,6 +91,7 @@ export default function LoadForm() {
       LUcharges: 0,
       date: null,
       remarks: "",
+      distance: 0,
     },
   });
 

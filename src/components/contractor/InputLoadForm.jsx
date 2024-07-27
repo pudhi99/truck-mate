@@ -57,6 +57,21 @@ const InputLoadForm = (props) => {
       console.error("Error:", errorText);
     }
   };
+
+  // const watchedFields = watch([
+  //   "origin",
+  //   "destination",
+  //   "includeLUC",
+  //   "distance",
+  //   "material",
+  //   "quantity",
+  //   "bodyType",
+  //   "truckType",
+  //   "tyres",
+  //   "advance",
+  //   "price",
+  //   "date",
+  // ]);
   useEffect(() => {
     if (
       form.watch("origin").length > 0 &&
@@ -103,11 +118,13 @@ const InputLoadForm = (props) => {
     } else {
       form.setValue("LUcharges", 0);
     }
+    console.log(form.watch("distance"));
   }, [
     form.watch("truckType"),
     form.watch("origin"),
     form.watch("destination"),
     form.watch("includeLUC"),
+    form.watch,
   ]);
 
   const onChangeRemarks = (event) => {
@@ -137,7 +154,11 @@ const InputLoadForm = (props) => {
                   </FormItem>
                 )}
               />
-              <CityFinder form={form} inputField={"origin"} />
+              <CityFinder
+                value={form.watch("origin")}
+                settingValue={form.setValue}
+                formKey={"origin"}
+              />
             </div>
             <div className="relative">
               <FormField
@@ -153,9 +174,32 @@ const InputLoadForm = (props) => {
                   </FormItem>
                 )}
               />
-              <CityFinder form={form} inputField={"destination"} />
+              <CityFinder
+                value={form.watch("destination")}
+                settingValue={form.setValue}
+                formKey={"destination"}
+              />
             </div>
             <p className="text-red-500 my-2">{sameCityError}</p>
+            <FormField
+              control={form.control}
+              name="distance"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Distance (in km)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Enter Distance in km"
+                      {...field}
+                      value={field.value ?? ""}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="materialName"

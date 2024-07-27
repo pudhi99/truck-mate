@@ -45,11 +45,13 @@ export async function POST(request) {
       LUcharges,
       date,
       remarks,
+      distance,
     } = await request.json();
 
     const result = await loadsCollection.insertOne({
       origin: origin || "",
       destination: destination || "",
+      distance: distance || 0,
       materialName: materialName || "",
       quantity: typeof quantity === "number" ? quantity : 0,
       bodyType: bodyType || "",

@@ -1,29 +1,45 @@
-import React from "react";
+"use client";
+import React, { useContext } from "react";
 import Logo from "./Logo";
 import { ModeToggle } from "./theme/ModeToggle";
 import LoginForm from "../authComponents/LoginForm";
 import LoginDialog from "./LoginDialog";
-import { auth } from "@/auth";
+
 import Logout from "../authComponents/Logout";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { UserContext } from "@/app/user-context";
 
-async function Navbar() {
-  const session = await auth();
+function Navbar() {
+  // const session = await auth();
+  const { user } = useContext(UserContext);
   return (
-    <div className="bg-navbar px-3 md:px-0">
-      <div className="md:container  h-16 sticky top-0 w-full flex">
+    <div className="bg-navbar backdrop-blur-sm px-3 md:px-0 sticky z-10 top-0">
+      <div className="md:container h-16 w-full flex">
         <div className="w-1/2">
           <Logo />
         </div>
         <div className="w-1/2 h-full flex justify-between items-center">
           {/* {!!session?.user === true ? <Logout /> : <LoginDialog />} */}
           <div className="hidden md:block flex-1">
-            <Link href="/market/hyderabad">
-              <Button variant="secondary" color="primary">
-                Market
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+              <div>
+                <Link href="/market">
+                  <Button variant="secondary" color="primary">
+                    Market
+                  </Button>
+                </Link>
+              </div>
+              {user ? (
+                <div>
+                  <Link href="/dashboard">
+                    <Button variant="secondary" color="primary">
+                      Dashboard
+                    </Button>
+                  </Link>
+                </div>
+              ) : null}
+            </div>
           </div>
           <div className="flex w-full  justify-end">
             <LoginDialog />

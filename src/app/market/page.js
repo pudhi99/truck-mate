@@ -5,46 +5,9 @@ import mongo from "@/utils/db";
 import Image from "next/image";
 import React from "react";
 
-const Loads = async ({ params, searchParams }) => {
-  console.log(params);
-  console.log(searchParams);
-  const origin = params.loads + "," + searchParams?.state;
-  const destination =
-    searchParams?.destination != ""
-      ? searchParams?.destination + "," + searchParams?.destate
-      : "";
-  const sortBy = searchParams?.sortby;
-
-  const findQuery = {
-    origin: origin,
-  };
-  // Conditionally add the destination to the query if it's defined
-  if (destination != "") {
-    findQuery.destination = destination;
-  }
-  const sortQuery = {};
-  switch (sortBy) {
-    case "distance":
-      sortQuery.distance = -1;
-      break;
-    case "date":
-      sortQuery.date = 1;
-      break;
-    default:
-      sortQuery.price = -1;
-      break;
-  }
-
-  console.log(origin, destination, sortBy);
-
+const Market = async ({ params, searchParams }) => {
   const db = await mongo();
-  // const loads = await db.collection("loads").find({}).toArray();
-
-  const loads = await db
-    .collection("loads")
-    .find(findQuery)
-    .sort(sortQuery)
-    .toArray();
+  const loads = await db.collection("loads").find({}).toArray();
 
   // console.log(loads);
 
@@ -78,4 +41,4 @@ const Loads = async ({ params, searchParams }) => {
   );
 };
 
-export default Loads;
+export default Market;
