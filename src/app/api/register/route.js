@@ -5,11 +5,11 @@ import bcrypt from "bcryptjs";
 import mongo from "@/utils/db";
 
 export async function POST(request) {
-  const { name, email, password } = await request.json();
-  console.log(name, email, password);
+  const { name, email, password, userType } = await request.json();
+  console.log(name, email, password, userType);
 
   // Validate mandatory fields
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !userType) {
     return new NextResponse(
       JSON.stringify({ error: "Mandatory fields are missing" }),
       {
@@ -47,6 +47,7 @@ export async function POST(request) {
       name,
       email,
       password: hashedPassword,
+      userType,
       createdAt: new Date(),
       updatedAt: new Date(),
     });

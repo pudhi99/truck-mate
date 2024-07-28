@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { ThemeProvider } from "@/components/layout/theme/theme-provider";
 import UserContextProvider from "./user-context";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
           <UserContextProvider>
             <Navbar />
             {children}
+            <Toaster />
           </UserContextProvider>
         </ThemeProvider>
       </body>

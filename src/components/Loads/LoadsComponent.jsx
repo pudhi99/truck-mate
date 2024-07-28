@@ -53,7 +53,11 @@ const LoadsComponent = (props) => {
                 />
                 <div className="ml-3">
                   <p className="text-sm font-medium">Transporter Name</p>
-                  <p className="text-xs text-gray-500">Transporter</p>
+                  <p className="text-xs text-gray-500">
+                    {eachLoad.transporter_name
+                      ? eachLoad.transporter_name
+                      : "N/A"}
+                  </p>
                 </div>
               </div>
               <div className="mt-4 text-right">

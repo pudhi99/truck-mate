@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -10,6 +11,18 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "http://localhost:3000/api/auth/session",
+      },
+      {
+        protocol: "https",
+        hostname: "localhost:3000",
       },
     ],
   },

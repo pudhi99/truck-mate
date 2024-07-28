@@ -11,7 +11,6 @@ import Link from "next/link";
 import { UserContext } from "@/app/user-context";
 
 function Navbar() {
-  // const session = await auth();
   const { user } = useContext(UserContext);
   return (
     <div className="bg-navbar backdrop-blur-sm px-3 md:px-0 sticky z-10 top-0">
@@ -20,7 +19,6 @@ function Navbar() {
           <Logo />
         </div>
         <div className="w-1/2 h-full flex justify-between items-center">
-          {/* {!!session?.user === true ? <Logout /> : <LoginDialog />} */}
           <div className="hidden md:block flex-1">
             <div className="flex gap-2">
               <div>
@@ -31,13 +29,22 @@ function Navbar() {
                 </Link>
               </div>
               {user ? (
-                <div>
-                  <Link href="/dashboard">
-                    <Button variant="secondary" color="primary">
-                      Dashboard
-                    </Button>
-                  </Link>
-                </div>
+                <>
+                  <div>
+                    <Link href="/dashboard">
+                      <Button variant="secondary" color="primary">
+                        Dashboard
+                      </Button>
+                    </Link>
+                  </div>
+                  <div>
+                    <Link href="/profile">
+                      <Button variant="secondary" color="primary">
+                        Profile
+                      </Button>
+                    </Link>
+                  </div>
+                </>
               ) : null}
             </div>
           </div>
