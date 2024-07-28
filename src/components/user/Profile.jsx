@@ -75,7 +75,7 @@ export default function Profile(props) {
                 </div>
                 <div className="flex justify-between items-center mt-2">
                   <span className="text-sm font-medium ">
-                    Total Loads Taken:
+                    Total Loads Taken testing:
                   </span>
                   <span className="text-sm ">0</span>
                 </div>
