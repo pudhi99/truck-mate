@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { UserContext } from "@/app/user-context";
 
 function LoginForm() {
-  const { setUser } = useContext(UserContext);
+  const { setIsLoggedIn } = useContext(UserContext);
   const router = useRouter();
   const [error, setError] = useState("");
 
@@ -30,7 +30,7 @@ function LoginForm() {
         console.error(response.error);
         setError(response.error.message);
       } else {
-        setUser(true);
+        setIsLoggedIn(true);
         router.push("/dashboard");
       }
     } catch (e) {

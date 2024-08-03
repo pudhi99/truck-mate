@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import { ThemeProvider } from "@/components/layout/theme/theme-provider";
 import UserContextProvider from "./user-context";
 import { Toaster } from "@/components/ui/toaster";
+import SessionWrapper from "@/components/authComponents/SessionWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,18 +18,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <UserContextProvider>
-            <Navbar />
-            {children}
-            <Toaster />
-          </UserContextProvider>
-        </ThemeProvider>
+        <SessionWrapper>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <UserContextProvider>
+              <Navbar />
+              {children}
+              <Toaster />
+            </UserContextProvider>
+          </ThemeProvider>
+        </SessionWrapper>
       </body>
     </html>
   );

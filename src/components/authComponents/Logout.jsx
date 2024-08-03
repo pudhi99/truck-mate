@@ -7,12 +7,12 @@ import { useRouter } from "next/navigation";
 
 function Logout() {
   const router = useRouter;
-  const { setUser } = useContext(UserContext);
+  const { setIsLoggedIn } = useContext(UserContext);
   const onSubmit = (event) => {
     event.preventDefault();
     try {
       const response = logout();
-      setUser(false);
+      setIsLoggedIn(false);
       router.push("/");
     } catch (error) {}
   };

@@ -22,20 +22,23 @@ export const {
         password: {},
       },
       async authorize(credentials) {
-        if (credentials === null) return null;
+        if (!credentials) return null;
 
         try {
           const db = await mongo();
           const usersCollection = await db.collection("users");
           const user = await usersCollection.findOne({
-            email: credentials?.email,
+            email: credentials.email,
           });
-          console.log(user, "checking user");
+
+          console.log(credentials, user, "checking user");
           if (user) {
             const isMatch = await bcrypt.compare(
               credentials.password,
               user.password
             );
+
+            console.log(isMatch, "checking password");
 
             if (isMatch) {
               return user;
@@ -46,7 +49,7 @@ export const {
             throw new Error("User not found");
           }
         } catch (error) {
-          throw new Error(error);
+          throw new Error(error.message);
         }
       },
     }),
@@ -73,5 +76,31 @@ export const {
       },
     }),
   ],
+  callbacks: {
+    async signIn({ user, account, profile }) {
+      if (profile) {
+        const db = await mongo();
+        const usersCollection = await db.collection("users");
+        console.log(profile, "checking profile");
+        // Check if the user exists in your database
+        const existingUser = await usersCollection.findOne({
+          email: profile.email,
+        });
+
+        // If the user does not exist, create a new user
+        if (!existingUser) {
+          const hashedPassword = await bcrypt.hash("default-password", 10); // Change "default-password" as needed
+          await usersCollection.insertOne({
+            name: profile.name,
+            email: profile.email,
+            image: profile.picture,
+            password: hashedPassword, // Store a hashed password
+          });
+        }
+      }
+
+      return true; // Allow sign-in
+    },
+  },
   trustHost: true,
 });

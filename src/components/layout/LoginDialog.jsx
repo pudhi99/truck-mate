@@ -27,12 +27,8 @@ import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 const LoginDialog = () => {
-  const { user } = useContext(UserContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(user);
-  useEffect(() => {
-    setIsLoggedIn(user);
-  }, [user]);
-  console.log(user, "checking user context");
+  const { isLoggedIn } = useContext(UserContext);
+
   return (
     <>
       <div className="md:hidden">
@@ -43,9 +39,19 @@ const LoginDialog = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <Link href={"/market/hyderabad"}>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
+            <Link href={"/market"}>
+              <DropdownMenuItem>Market</DropdownMenuItem>
             </Link>
+            {isLoggedIn ? (
+              <>
+                <Link href={"/dashboard"}>
+                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                </Link>
+                <Link href={"/profile"}>
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                </Link>{" "}
+              </>
+            ) : null}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
