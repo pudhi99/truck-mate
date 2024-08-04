@@ -6,7 +6,7 @@ import { UserContext } from "@/app/user-context";
 import { useRouter } from "next/navigation";
 
 function Logout() {
-  const router = useRouter;
+  const router = useRouter();
   const { setIsLoggedIn } = useContext(UserContext);
   const onSubmit = (event) => {
     event.preventDefault();
