@@ -24,6 +24,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "localhost:3000",
       },
+      {
+        protocol: "https",
+        hostname: "https://truck-mate.vercel.app",
+      },
     ],
   },
   experimental: {

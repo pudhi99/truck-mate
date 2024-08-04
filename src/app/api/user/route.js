@@ -49,23 +49,23 @@ export async function GET(req) {
 }
 
 export async function PUT(req) {
-  const { phoneNumber, name, age, driverType, aadhar, image, rc, rcImage } =
-    await req.json();
-  console.log(phoneNumber, name, age, driverType, aadhar, image, rc, rcImage);
+  // Parse the request body
+  const updateData = await req.json();
+  console.log(updateData); // Log the entire update data
 
   // Input validation (basic example)
-  if (!phoneNumber || !name || !age || !driverType) {
-    return new Response(JSON.stringify({ error: "Missing required fields" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+  // if (!updateData.phoneNumber || !updateData.name || !updateData.age || !updateData.driverType) {
+  //   return new Response(JSON.stringify({ error: "Missing required fields" }), {
+  //     status: 400,
+  //     headers: { "Content-Type": "application/json" },
+  //   });
+  // }
 
   try {
     const db = await mongo();
     const usersCollection = db.collection("users");
     const session = await auth();
-    const userEmail = session?.user?.email;
+    const userEmail = session?.user?.email || updateData.email;
 
     if (!userEmail) {
       return new Response(
@@ -80,30 +80,23 @@ export async function PUT(req) {
     const updatedUser = await usersCollection.findOneAndUpdate(
       { email: userEmail }, // Ensure _id is correct
       {
-        $set: {
-          phoneNumber,
-          name,
-          age,
-          driverType,
-          aadhar,
-          image,
-          rc,
-          rcImage,
-        },
+        $set: updateData, // Use the entire updateData object
       },
       { returnDocument: "after" }
     );
 
-    // console.log(updatedUser);
-    // if (!updatedUser.value) {
-    //   return new Response(
-    //     JSON.stringify({ error: "User not found or no changes made" }),
-    //     {
-    //       status: 404, // Not Found
-    //       headers: { "Content-Type": "application/json" },
-    //     }
-    //   );
-    // }
+    console.log(updatedUser, "updatedUser");
+
+    // Check if the user was found and updated
+    if (!updatedUser.email) {
+      return new Response(
+        JSON.stringify({ error: "User not found or no changes made" }),
+        {
+          status: 404, // Not Found
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
 
     return new Response(JSON.stringify(updatedUser), {
       status: 200,

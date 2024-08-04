@@ -59,49 +59,57 @@ const LoadsFilter = (props) => {
     router.push(newPathname + "?" + query);
   };
   return (
-    <Card className="min-w-[80%]  h-28 ">
+    <Card className="min-w-[80%] h-36 md:h-28 ">
       <div className="w-full flex justify-center h-full items-center gap-3 p-3">
-        <div className="relative grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="origin">Origin</Label>
-          <Input
-            type="text"
-            id="origin"
-            placeholder="Origin"
-            value={origin}
-            onChange={(e) => setOrigin(e.target.value)}
-          />
-          <CityFinder value={origin} settingValue={setOrigin} />
-        </div>
-        <div className="relative grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="destination">Destination</Label>
-          <Input
-            type="text"
-            id="destination"
-            placeholder="Destination"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-          />
-          <CityFinder value={destination} settingValue={setDestination} />
-        </div>
-        <Select value={sortBy} onValueChange={setSortBy} defaultValue={"price"}>
-          <div className=" grid w-fit max-w-sm items-center gap-1.5 mb-2">
-            <Label htmlFor="">Sort By</Label>
-            <SelectTrigger className="w-fit">
-              <SelectValue placeholder="Sort By" />
-            </SelectTrigger>
+        <div className="md:flex w-full gap-3">
+          <div className="relative grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="origin">Origin</Label>
+            <Input
+              type="text"
+              id="origin"
+              placeholder="Origin"
+              value={origin}
+              onChange={(e) => setOrigin(e.target.value)}
+            />
+            <CityFinder value={origin} settingValue={setOrigin} />
           </div>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Sort By</SelectLabel>
-              <SelectItem value="price">Price</SelectItem>
-              <SelectItem value="distance">Distance</SelectItem>
-              <SelectItem value="date">Date</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Button className="mt-3" onClick={() => updateQuery()}>
-          Find
-        </Button>
+          <div className="relative grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="destination">Destination</Label>
+            <Input
+              type="text"
+              id="destination"
+              placeholder="Destination"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+            />
+            <CityFinder value={destination} settingValue={setDestination} />
+          </div>
+        </div>
+        <div className="md:flex  gap-3">
+          <Select
+            value={sortBy}
+            onValueChange={setSortBy}
+            defaultValue={"price"}
+          >
+            <div className=" grid w-fit max-w-sm items-center gap-1.5 md:mb-2">
+              <Label htmlFor="">Sort By</Label>
+              <SelectTrigger className="w-fit">
+                <SelectValue placeholder="Sort By" />
+              </SelectTrigger>
+            </div>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Sort By</SelectLabel>
+                <SelectItem value="price">Price</SelectItem>
+                <SelectItem value="distance">Distance</SelectItem>
+                <SelectItem value="date">Date</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Button className="mt-3 md:mt-5" onClick={() => updateQuery()}>
+            Find
+          </Button>
+        </div>
       </div>
     </Card>
   );

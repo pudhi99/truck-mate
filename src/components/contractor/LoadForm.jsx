@@ -122,7 +122,7 @@ export default function LoadForm() {
             <InputLoadForm form={form} />
           </div>
         </div>
-        <DialogFooter className="sm:justify-start">
+        <DialogFooter className="md:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary">
               Close
